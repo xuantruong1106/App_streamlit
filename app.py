@@ -561,6 +561,8 @@ if selected == 'Data Analysis':
                 # Hiển thị thông báo khi xử lý duplicate thành công
                 if handled:
                     st.write("Duplicates handled successfully.")
+                else:
+                    st.write(handled)
 
 
             with tab4:
