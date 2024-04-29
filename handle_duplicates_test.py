@@ -52,6 +52,9 @@ if selected == 'Data Analysis':
         for uploaded_file in uploaded_files:
             df = pd.read_csv(uploaded_file)
             st.write(uploaded_file.name)        
+           
+            column_names = df.columns.tolist()
+            st.write("Column names:", column_names) 
             
             def info_dataset(df):
                 buffer = io.StringIO()
