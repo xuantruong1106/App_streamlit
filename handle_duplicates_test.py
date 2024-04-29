@@ -67,11 +67,7 @@ if selected == 'Data Analysis':
                 
                 # Drop duplicates
                 my_df.drop_duplicates(inplace=True)
-
-                st.write('DataFrame after handling duplicates:')
-                st.write(my_df)
-                info_dataset(my_df) 
-
+                
                 return my_df   
                                    
             # Kiểm tra nếu session state chưa tồn tại, khởi tạo mới
@@ -88,6 +84,7 @@ if selected == 'Data Analysis':
                 if st.button("Check for Duplicates"):
                     st.session_state.my_df_copy = handle_duplicates(my_df = df)
                     st.write(st.session_state.my_df_copy)
+                    info_dataset(st.session_state.my_df_copy)
                     
                           
                          
