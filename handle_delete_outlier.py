@@ -106,11 +106,18 @@ with tab1:
     
     selected_column = st.selectbox("Column", st.session_state.my_df.columns, key="outlier_select")
     
-    check_outliers_plot(st.session_state.my_df, selected_column)
+    # tạo 1 container chứa biểu đồ trong trường hợp có outlier
+    container_diagram =  st.empty()
+    
+    with container_diagram.container():
+        check_outliers_plot(st.session_state.my_df, selected_column)
         
     if st.button('Handle Outliers'):
         st.session_state.my_df = remove_outliers(df, selected_column)
-        st.write(selected_column)
-        st.write('remove succesfuly')
+        st.write('remove successfully')
+        # sau khi remove successfully thì container sẽ được làm rỗng
+        container_diagram.empty()
+    
+
         
             
