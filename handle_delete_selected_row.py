@@ -53,13 +53,47 @@ if selected == 'Data Analysis':
            
             column_names = df.columns.tolist()
             st.write("Column names:", column_names) 
-            
+                      
 # Kiểm tra nếu session state chưa tồn tại, khởi tạo mới
 if 'my_df' not in st.session_state: 
     st.session_state.my_df = df
 if 'deleted_columns' not in st.session_state:
     st.session_state.deleted_columns = []    
 
-tab1, tab2 = st.tabs(["delete", "asdh"])
+tab1, tab2 = st.tabs(["Remove Rows with Null", "asdh"])
 
 with tab1:
+
+    col1 , col2 = st.columns(2)
+    
+    with col1:
+        st.write("Kiểm tra missing values")
+        st.write(st.session_state.my_df.isnull().sum())
+
+    with col2:
+        
+        selected_columns = st.multiselect("Select columns to remove rows with null values:", st.session_state.my_df.columns, key="RemoveRowsNull")
+        
+        # chứa các hàng đã chọn để xoá
+        indices_to_remove = []
+        
+        # lấy các hàng null
+        mask = st.session_state.my_df[selected_columns].isnull().any(axis = 1)
+        
+        # lấy thông tin các hàng null
+        rows_with_null = st.session_state.my_df[mask]  
+ 
+        for index, row in rows_with_null.iterrows():
+            checkbox_value = st.checkbox(f'select row {index}')
+            st.write(row.to_frame().T)
+            if checkbox_value:
+                indices_to_remove.append(index)
+            
+        if st.button("Remove Rows with Null"):
+            if indices_to_remove:
+                st.session_state.my_df = st.session_state.my_df.drop(indices_to_remove)
+                st.write("remove successfully.")
+            else:
+                st.write('select rows you want to delete')
+            
+            

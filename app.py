@@ -495,11 +495,6 @@ if selected == 'Data Analysis':
                 my_df[column] = encoder.fit_transform(my_df[column])
                 return my_df               
             
-
-            
-
-
-                        
             # Kiểm tra nếu session state chưa tồn tại, khởi tạo mới
             if 'my_df' not in st.session_state:
                 st.session_state.my_df = pd.DataFrame()
