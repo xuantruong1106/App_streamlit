@@ -43,10 +43,8 @@ if selected == 'Data Analysis':
     
     st.title('Clean Data')
 
-    
     uploaded_files = st.file_uploader("Choose a CSV file", accept_multiple_files=True)
     
-
     if uploaded_files:
         
         for uploaded_file in uploaded_files:
@@ -56,59 +54,12 @@ if selected == 'Data Analysis':
             column_names = df.columns.tolist()
             st.write("Column names:", column_names) 
             
-            def info_dataset(df):
-                buffer = io.StringIO()
-                df.info(buf=buffer)
-                s = buffer.getvalue()
-                st.text(s)
+# Kiểm tra nếu session state chưa tồn tại, khởi tạo mới
+if 'my_df' not in st.session_state: 
+    st.session_state.my_df = df
+if 'deleted_columns' not in st.session_state:
+    st.session_state.deleted_columns = []    
 
-            # Hàm xử lý duplicate
-            def handle_duplicates(my_df):
-                st.write('DataFrame before handling duplicates:')
-                st.write(my_df)
-                info_dataset(my_df)
-                
-                # Drop duplicates
-                my_df.drop_duplicates(inplace=True)
-                
-                return my_df   
-                                   
-            # Kiểm tra nếu session state chưa tồn tại, khởi tạo mới
-            if 'my_df' not in st.session_state: 
-                st.session_state.my_df = df
-            if 'deleted_columns' not in st.session_state:
-                st.session_state.deleted_columns = []    
-            
-            tab1, tab2 = st.tabs(["Handle duplicates", "asdh"])
-        
-            with tab1:
-                st.header("Handle Duplicates")
-                            
-                if st.button("Check for Duplicates"):
-                    st.session_state.my_df_copy = handle_duplicates(my_df = df)
-                    st.write(st.session_state.my_df_copy)
-                    info_dataset(st.session_state.my_df_copy)
-                    
-                          
-                         
-               
-            
-            
-            
-            
-            
-            
-            
+tab1, tab2 = st.tabs(["delete", "asdh"])
 
-        
-    
-
-
-    
-
-
-
-    
-    
-
-    
+with tab1:
